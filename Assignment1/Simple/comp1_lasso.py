@@ -70,37 +70,6 @@ scaled_testing_data = scaler.transform(np.array(testing_data, dtype=float))
 
 # Train a linear model
 model = LinearRegression()
-
-# Set up k-fold cross validation
-from sklearn.model_selection import KFold
-Kf = KFold(n_splits=5, shuffle=True)
-
-# Create a full cross-validation loop
-from sklearn.metrics import mean_absolute_error
-
-mae_score = []
-fold_number = 1
-
-for train_idx, test_idx in Kf.split(scaled_training_data):
-    # Generate training and testing datasets
-    X_train, y_train = scaled_training_data[train_idx], np.array(training_targets)[train_idx]
-    X_test, y_test = scaled_training_data[test_idx], np.array(training_targets)[test_idx]
-
-    # Fit the model to the new data
-    model.fit(X_train, y_train)
-
-    # Make predictions
-    preds = model.predict(X_test)
-
-    # Calculate our MAE value
-    mae = mean_absolute_error(y_test, preds)
-    mae_score.append(mae)
-
-    print(f"MAE at iteration {fold_number} is {mae}")
-
-    fold_number += 1
-
-"""
 model.fit(scaled_training_data, training_targets)
 
 # Generate our predictions
@@ -111,4 +80,4 @@ with open('submission_lasso.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile, delimiter=',')
     writer.writerow(['ID', 'charges'])
     for idx, row in enumerate(target_predictions, start=0):
-        writer.writerow([testing_ids[idx][0], row])"""
+        writer.writerow([testing_ids[idx][0], row[0]])

@@ -1,8 +1,7 @@
 import numpy as np
 import csv
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
-from sklearn.linear_model import LinearRegression, Lasso, Ridge
-from sklearn.metrics import mean_absolute_error
+from sklearn.linear_model import LinearRegression, Lasso
 
 def read_csv(filename):
     return_list = []
@@ -72,10 +71,6 @@ scaled_testing_data = scaler.transform(np.array(testing_data, dtype=float))
 # Train a linear model
 model = LinearRegression()
 model.fit(scaled_training_data, training_targets)
-
-training_predictions = model.predict(scaled_training_data)
-mae = mean_absolute_error(training_targets, training_predictions)
-print(f"MAE: {mae}")
 
 # Generate our predictions
 target_predictions = model.predict(scaled_testing_data)
